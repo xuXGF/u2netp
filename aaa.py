@@ -60,9 +60,11 @@ def main():
 
         pred = process_frame(frame)
         mask = cv2.cvtColor(pred, cv2.COLOR_GRAY2BGR)
-        mask_resized = cv2.resize(mask, (frame.shape[1], frame.shape[0]))
+        mask_resized = cv2.resize(mask, (frame.shape[1], frame.shape[0]), cv2.INTER_LINEAR)
+        mask_resized = cv2.GaussianBlur(mask_resized, (15, 15), 0)
         frame[mask_resized != 255] = 0
-        result = frame
+        result = cv2.flip(frame,1)
+
 
         cv2.imshow('Processed Frame', result)
 
